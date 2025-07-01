@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - معهد إبداع الرؤى</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>نظام إدارة معهد إبداع الرؤى</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" data-page="dashboard">الرئيسية</a></li>
+                    <li><a href="#" data-page="students">الطلاب</a></li>
+                    <li><a href="#" data-page="payments">المدفوعات</a></li>
+                    <li><a href="#" data-page="statistics">الإحصائيات</a></li>
+                    <li><a href="#" data-page="teachers">المدرسين</a></li>
+                    <li><a href="#" data-page="settings">الإعدادات</a></li>
+                    <li><button id="logout">تسجيل الخروج</button></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main id="main-content">
+            <!-- Dynamic content will be loaded here -->
+            <section id="dashboard-page" class="page active">
+                <h2>مرحبًا بك في لوحة التحكم</h2>
+                <div class="stats-cards">
+                    <div class="card">
+                        <h3>إجمالي الطلاب</h3>
+                        <p id="total-students">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>المدفوعات الكاملة</h3>
+                        <p id="full-payments">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>المدفوعات الجزئية</h3>
+                        <p id="partial-payments">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>لم يدفعوا</h3>
+                        <p id="no-payments">0</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="students-page" class="page">
+                <h2>إدارة الطلاب</h2>
+                <button id="add-student-btn" class="action-btn">إضافة طالب جديد</button>
+                
+                <div id="student-form-container" style="display:none;">
+                    <h3>بيانات الطالب</h3>
+                    <form id="student-form">
+                        <div class="input-group">
+                            <label for="fullName">الاسم الكامل</label>
+                            <input type="text" id="fullName" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="phoneNumber">رقم الهاتف</label>
+                            <input type="text" id="phoneNumber" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="region">المنطقة</label>
+                            <input type="text" id="region" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="parentPhone">رقم ولي الأمر</label>
+                            <input type="text" id="parentPhone" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="lineName">اسم الخط</label>
+                            <input type="text" id="lineName" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="grade">الصف</label>
+                            <select id="grade" required>
+                                <option value="Sixth Grade Science">السادس علمي</option>
+                                <option value="Sixth Grade Literature">السادس أدبي</option>
+                                <option value="Sixth Grade Vocational">السادس مهني</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="lineOwnerNumber">رقم صاحب الخط</label>
+                            <input type="text" id="lineOwnerNumber" required>
+                        </div>
+                        <button type="submit">حفظ</button>
+                        <button type="button" id="cancel-student-form">إلغاء</button>
+                    </form>
+                </div>
+                
+                <div id="students-list">
+                    <h3>قائمة الطلاب</h3>
+                    <table id="students-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>رقم الهاتف</th>
+                                <th>المنطقة</th>
+                                <th>الصف</th>
+                                <th>حالة الدفع</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Students will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="payments-page" class="page">
+                <h2>إدارة المدفوعات</h2>
+                <div id="payment-form-container">
+                    <h3>تسديد دفعة</h3>
+                    <form id="payment-form">
+                        <div class="input-group">
+                            <label for="student-select">الطالب</label>
+                            <select id="student-select" required>
+                                <!-- Students will be loaded here -->
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="amount">المبلغ (دينار)</label>
+                            <input type="number" id="amount" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="receipt-number">رقم الإيصال</label>
+                            <input type="text" id="receipt-number" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="payment-date">تاريخ الدفع</label>
+                            <input type="date" id="payment-date" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="payment-notes">ملاحظات</label>
+                            <textarea id="payment-notes"></textarea>
+                        </div>
+                        <button type="submit">تسجيل الدفعة</button>
+                    </form>
+                </div>
+                
+                <div id="payments-history">
+                    <h3>سجل الدفعات</h3>
+                    <table id="payments-table">
+                        <thead>
+                            <tr>
+                                <th>اسم الطالب</th>
+                                <th>المبلغ</th>
+                                <th>رقم الإيصال</th>
+                                <th>تاريخ الدفع</th>
+                                <th>ملاحظات</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Payments will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>© 2025 معهد إبداع الرؤى. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>
